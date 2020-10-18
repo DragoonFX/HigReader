@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "HigReader.h"
 
 void main()
@@ -23,7 +24,7 @@ void main()
 void GetFileName()
 {
   printf("Input file name with path\n");
-  gets(FileName);
+  scanf("%s",FileName);
 }
 
 bool ReadFile()
@@ -40,7 +41,8 @@ bool ReadFile()
   ssize_t read;
   while ((read=getline(&currentLine, &length, CurrentFile)) != -1)
   {
-    printf("%s", currentLine);
+    //printf("%s", currentLine);
+    LineValidation(currentLine);
   }
   free(currentLine);
   return true;
@@ -48,5 +50,8 @@ bool ReadFile()
 
 void LineValidation(char *currentLine)
 {
-  
+  if(strstr(currentLine,"OutputLine"))
+  {
+    printf("%s",currentLine);
+  }
 }
