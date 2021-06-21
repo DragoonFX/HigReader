@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "HigReader.h"
+#include "HiguReader.h"
 
 void main(int argc, char *argv[])
 {
@@ -16,10 +16,10 @@ void main(int argc, char *argv[])
 		
 		if(f_name_length <= 12)
 		{
-			printf("\n[%c%c]\n", argv[1][6], argv[1][7]);
+			printf("\n[%c%c]\n\n", argv[1][6], argv[1][7]);
 		}
 		else 
-			printf("\n[%c%c%c%c%c]\n", argv[1][6], argv[1][7], argv[1][8], argv[1][9], argv[1][10]);
+			printf("\n[%c%c%c%c%c]\n\n", argv[1][6], argv[1][7], argv[1][8], argv[1][9], argv[1][10]);
 		
 		strcpy(identifier, "Line_");
 		
@@ -34,7 +34,8 @@ void main(int argc, char *argv[])
 		free(CurrentFile);
 	}
 	else
-		printf("Error! Too many arguments!\n");
+		printf("Error! Too many arguments!\n"
+				"Usage: ./HiguReader.out filename.txt\n");
 }
 
 bool ReadFile(int g_argc, char **g_argv)
