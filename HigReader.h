@@ -1,13 +1,11 @@
 #ifndef HigReaderHeader
 #define HigReaderHeader
 
-char FileName[100];
 FILE *CurrentFile;
-bool IsEnglish;
 char identifier[19];
 
-void GetFileName();
-bool ReadFile();
+bool ReadFile(int g_argc, char **g_argv);
+char *extract(const char *const string, const char *const left, const char *const right);
 void LineValidation(char *currentLine);
 void CharacterValidation(char *currentLine);
 

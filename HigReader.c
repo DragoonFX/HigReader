@@ -4,51 +4,43 @@
 #include <string.h>
 #include "HigReader.h"
 
-void main()
-  {
-
-    GetFileName();
-
-    if (IsEnglish)
-    {
-      strcpy(identifier, "Line_WaitForInput");
-    }
-    else
-    {
-      strcpy(identifier, "OutputLine(");
-    }
-
-    if(!ReadFile())
-    {
-      printf("Invalid file\n");
-      free(CurrentFile);
-      return;
-    }
-    printf("Success\n");
-
-
-    free(CurrentFile);
-  }
-
-void GetFileName()
+void main(int argc, char *argv[])
 {
-  printf("Choose language, 0 for Japanese, 1 for English\n");
-  int temp;
-  scanf("%d",&temp);
-  if (temp != 0 && temp != 1)
-  {
-    exit(1);
-  }
-  IsEnglish=temp;
-
-  printf("Input file name\n");
-  scanf("%s",FileName);
+	int f_name_length;
+	
+	if (argc == 2)
+	{	
+		//printf("Filename: %s\n", *(argv + 1));
+		
+		f_name_length = strlen(argv[1]);
+		
+		if(f_name_length <= 12)
+		{
+			printf("\n[%c%c]\n", argv[1][6], argv[1][7]);
+		}
+		else 
+			printf("\n[%c%c%c%c%c]\n", argv[1][6], argv[1][7], argv[1][8], argv[1][9], argv[1][10]);
+		
+		strcpy(identifier, "Line_");
+		
+		if(!ReadFile(argc, argv))
+		{
+			printf("Invalid file\n");
+			free(CurrentFile);
+			return;
+		}
+		printf("\n");
+		
+		free(CurrentFile);
+	}
+	else
+		printf("Error! Too many arguments!\n");
 }
 
-bool ReadFile()
+bool ReadFile(int g_argc, char **g_argv)
 {
   //Can we retrieve file?
-  if ((CurrentFile=fopen(FileName,"r")) == NULL)
+  if ((CurrentFile=fopen(g_argv[1],"r")) == NULL)
   {
     exit(1);
   }
@@ -58,39 +50,81 @@ bool ReadFile()
   size_t length = 0;
   ssize_t read;
 
-  while ((read=getline(&currentLine, &length, CurrentFile)) != -1)
+  while ((read=getline(&currentLine, &length, CurrentFile)) != EOF)
   {
     CharacterValidation(currentLine);
     LineValidation(currentLine);
   }
   free(currentLine);
+  
   return true;
+}
+
+char *extract(const char *const string, const char *const left, const char *const right)
+{
+    char  *head;
+    char  *tail;
+    size_t length;
+    char  *result;
+
+    if ((string == NULL) || (left == NULL) || (right == NULL))
+        return NULL;
+	
+    length = strlen(left);
+    head   = strstr(string, left);
+    if (head == NULL)
+        return NULL;
+	
+    head += length;
+    tail  = strstr(head, right);
+    if (tail == NULL)
+        return tail;
+	
+    length = tail - head;
+    result = malloc(1 + length);
+    if (result == NULL)
+        return NULL;
+	
+    result[length] = '\0';
+    memcpy(result, head, length);
+	
+	//printf("%s\n", result);//prints unformatted string(for debugging)
+	
+    return result;
 }
 
 void LineValidation(char *currentLine)
 {
-  if(strstr(currentLine,identifier)
-  || (IsEnglish && strstr(currentLine,"Line_Normal")))
+  if(strstr(currentLine,identifier) || strstr(currentLine,"Line_Normal"))
   {
-    char subLine[500];
-    int len = strlen(currentLine);
-    int i;
-    if (IsEnglish)
-    {i=11;}
-    else
-    {i=16;}
-    for (i;i<len;i++)
-    {
-      //Check if line has ended, in some cases line is empty
-      if (currentLine[i] == 'L' && currentLine[i+1] == 'i' && currentLine[i+2] == 'n' &&currentLine[i+3] == 'e')
-      {break;}
-      //Filter out special characters
-      if(currentLine[i] != '\"' && currentLine[i] != '\n' && currentLine[i] != '\\' && currentLine[i] != ',')
+    int i, len;
+		char subLine[500];
+		char *open = "NULL, \"";//string starting with |NULL, "|
+		char *end = "\",";//string ending with |",|
+		
+		currentLine = extract(currentLine, open, end);//finds out a string that starts with |NULL, "| and ends with |",|
+		len = strlen(currentLine);
+	
+    for (i=0;i<len;i++)
+    { 
+      //Skip if the line has ended, in some cases line is empty
+      if (currentLine[i] == 'L' && currentLine[i+1] == 'i' && currentLine[i+2] == 'n' && currentLine[i+3] == 'e')
       {
-        strncat(subLine, &currentLine[i], 1);
-      }
+			break;
+	  	}
+	  	//Skips if the line is OutputLineAll
+	  	if (currentLine[0] == '\\' && currentLine[1] == 'n')
+      {
+			break;
+	  	}
+      //Filter out special characters
+	  	if (currentLine[i] != '\n' && currentLine[i] != '\\')
+	  	{
+			strncat(subLine, &currentLine[i], 1);
+	  	}
     }
-    printf("%s\n",subLine);
+	
+    printf("%s\n", subLine);
     strcpy(subLine, "");
   }
 }
@@ -99,124 +133,125 @@ void CharacterValidation(char *currentLine)
 {
   char name[100];
   bool hasName=false;
+  
   if(strstr(currentLine,"DrawBustshot"))
   {
-    strcat(name,"Characters in scene ");
     if(strstr(currentLine,"\"me_"))
     {
-      strcat(name, "Mion ");
+      strcat(name, "Mion");
       hasName=true;
     }
     if(strstr(currentLine,"\"oi_")||strstr(currentLine,"\"oisi"))
     {
-      strcat(name, "Ooishi ");
+      strcat(name, "Ooishi");
       hasName=true;
     }
     if(strstr(currentLine,"\"oni_"))
     {
-      strcat(name, "Dark Rena ");
+      strcat(name, "Dark Rena");
       hasName=true;
     }
     if(strstr(currentLine,"\"re_"))
     {
-      strcat(name, "Rena ");
+      strcat(name, "Rena");
       hasName=true;
     }
     if(strstr(currentLine,"\"ri_"))
     {
-      strcat(name, "Rika ");
+      strcat(name, "Rika");
       hasName=true;
     }
     if(strstr(currentLine,"\"sa_"))
     {
-      strcat(name, "Satoko ");
+      strcat(name, "Satoko");
       hasName=true;
     }
     if(strstr(currentLine,"\"ta_"))
     {
-      strcat(name, "Takano ");
+      strcat(name, "Takano");
       hasName=true;
     }
     if(strstr(currentLine,"\"tm_")||strstr(currentLine,"\"tomi"))
     {
-      strcat(name, "Tomitake ");
+      strcat(name, "Tomitake");
       hasName=true;
     }
     if(strstr(currentLine,"\"si_"))
     {
-      strcat(name, "Shion ");
+      strcat(name, "Shion");
       hasName=true;
     }
     if(strstr(currentLine,"\"wata_mion"))
     {
-      strcat(name, "Dark Mion ");
+      strcat(name, "Dark Mion");
       hasName=true;
     }
     if(strstr(currentLine,"\"wata_rena"))
     {
-      strcat(name, "Depressed Rena ");
+      strcat(name, "Depressed Rena");
       hasName=true;
     }
     if(strstr(currentLine,"\"ir_"))
     {
-      strcat(name, "Irie ");
+      strcat(name, "Irie");
       hasName=true;
     }
     if(strstr(currentLine,"\"ti_")||strstr(currentLine,"\"tie"))
     {
-      strcat(name, "Chie ");
+      strcat(name, "Chie");
       hasName=true;
     }
     if(strstr(currentLine,"\"aka_"))
     {
-      strcat(name, "Akane ");
+      strcat(name, "Akane");
       hasName=true;
     }
     if(strstr(currentLine,"\"kasa"))
     {
-      strcat(name, "Kasai ");
+      strcat(name, "Kasai");
       hasName=true;
     }
     if(strstr(currentLine,"\"ke"))
     {
-      strcat(name, "Negative Ooishi ");
+      strcat(name, "Negative Ooishi");
       hasName=true;
     }
     if(strstr(currentLine,"\"kei_"))
     {
-      strcat(name, "Keiichi ");
+      strcat(name, "Keiichi");
       hasName=true;
     }
     if(strstr(currentLine,"\"sato"))
     {
-      strcat(name, "Satoshi ");
+      strcat(name, "Satoshi");
       hasName=true;
     }
     if(strstr(currentLine,"\"tetu"))
     {
-      strcat(name, "Teppei ");
+      strcat(name, "Teppei");
       hasName=true;
     }
     if(strstr(currentLine,"\"aks_"))
     {
-      strcat(name, "Akasaka ");
+      strcat(name, "Akasaka");
       hasName=true;
     }
     if(strstr(currentLine,"\"ha_"))
     {
-      strcat(name, "Hanyuu ");
+      strcat(name, "Hanyuu");
       hasName=true;
     }
     if(strstr(currentLine,"\"rina_"))
     {
-      strcat(name, "Rina ");
+      strcat(name, "Rina");
       hasName=true;
     }
-    strcat(name,"\n");
   }
+  
   if(hasName)
   {
-    printf("%s", name);
+    printf("\n[%s]\n", name);
   }
+  
   strcpy(name, "");
 }
