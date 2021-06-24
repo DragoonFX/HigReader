@@ -88,7 +88,9 @@ char *extract_text(const char *const string, const char *const start, const char
 
 void print_title(char *fname)
 {
-	int title_num; 
+	int title_num, flag;
+	
+	flag = 1;
 
 	if(strstr(fname, "onik"))
 	{
@@ -138,10 +140,165 @@ void print_title(char *fname)
 			printf("\n\n[Onikakushi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
 		}
 	}
-	//else(strstr(h_argv[1], ""))
-	//{
-
-	//}
+	else if(strstr(fname, "wata"))
+	{
+		if(!strstr(fname, "tips") && !strstr(fname, "_ep_"))
+		{
+			if(strstr(fname, "001"))
+				title_num = 1;
+			else if(strstr(fname, "002"))
+				title_num = 2;
+			else if(strstr(fname, "003"))
+				title_num = 3;
+			else if(strstr(fname, "004"))
+				title_num = 4;
+			else if(strstr(fname, "005"))
+				title_num = 5;
+			else if(strstr(fname, "006"))
+				title_num = 6;
+			else if(strstr(fname, "007"))
+				title_num = 7;
+			else if(strstr(fname, "008"))
+				title_num = 8;
+			else if( (strstr(fname, "009") && !strstr(fname, "02")) || strstr(fname, "009_00") )
+				title_num = 9;
+			else if(strstr(fname, "009_02"))
+				title_num = 10;
+			else if( (strstr(fname, "010") && !strstr(fname, "02") && !strstr(fname, "03") && !strstr(fname, "04")) || strstr(fname, "010_00") )
+				title_num = 11;
+			else if(strstr(fname, "010_02"))
+				title_num = 12;
+			else if(strstr(fname, "010_03"))
+				title_num = 13;
+			else if(strstr(fname, "010_04"))
+				title_num = 14;
+			else if( (strstr(fname, "011") && !strstr(fname, "02")) || strstr(fname, "011_00") )
+				title_num = 15;
+			else if(strstr(fname, "011_02"))
+				title_num = 16;
+			else if( (strstr(fname, "012") && !strstr(fname, "02") && !strstr(fname, "03")) || strstr(fname, "012_00") )
+				title_num = 17;
+			else if(strstr(fname, "012_02"))
+				title_num = 18;
+			else if(strstr(fname, "012_03"))
+				title_num = 19;
+			
+			printf("\n\n[Watanagashi Ch.%d]\n\n", title_num);
+		}
+		else if(strstr(fname, "_ep_"))
+		{
+			if(strstr(fname, "_ep_01"))
+				printf("\n\n[Watanagashi Epilogue 1]\n\n");
+			else 
+				printf("\n\n[Watanagashi Epilogue 2]\n\n");
+		}
+		else if(strstr(fname, "tips"))
+		{
+			printf("\n\n[Watanagashi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
+		}
+	}
+	else if(strstr(fname, "tata"))
+	{
+		if(!strstr(fname, "tips") && !strstr(fname, "_ep"))
+		{
+			if(strstr(fname, "001"))
+				title_num = 1;
+			else if(strstr(fname, "002"))
+				title_num = 2;
+			else if(strstr(fname, "003"))
+				title_num = 3;
+			else if(strstr(fname, "004"))
+				title_num = 4;
+			else if(strstr(fname, "005"))
+				title_num = 5;
+			else if( (strstr(fname, "008") && !strstr(fname, "02")) || strstr(fname, "008_00") )
+				title_num = 6;
+			else if(strstr(fname, "008_02"))
+				title_num = 7;
+			else if( (strstr(fname, "009") && !strstr(fname, "02")) || strstr(fname, "009_00") )
+				title_num = 8;
+			else if(strstr(fname, "009_02"))
+				title_num = 9;
+			else if( (strstr(fname, "010") && !strstr(fname, "02") && !strstr(fname, "03") && !strstr(fname, "04")) || strstr(fname, "010_00") )
+				title_num = 10;
+			else if(strstr(fname, "010_02"))
+				title_num = 11;
+			else if(strstr(fname, "010_03"))
+				title_num = 12;
+			else if(strstr(fname, "010_04"))
+				title_num = 13;
+			else if( (strstr(fname, "011") && !strstr(fname, "02") && !strstr(fname, "03")) || strstr(fname, "011_00") )
+				title_num = 14;
+			else if(strstr(fname, "011_02"))
+				title_num = 15;
+			else if(strstr(fname, "011_03"))
+				title_num = 16;
+			else if(strstr(fname, "012"))
+				title_num = 17;
+			else if( (strstr(fname, "013") && !strstr(fname, "02")) || strstr(fname, "013_00") )
+				title_num = 18;
+			else if(strstr(fname, "013_02"))
+				title_num = 19;
+			else if(strstr(fname, "014"))
+				title_num = 20;
+			
+			printf("\n\n[Tatarigoroshi Ch.%d]\n\n", title_num);
+		}
+		else if(strstr(fname, "_ep"))
+		{
+			if(strstr(fname, "_ep01"))
+				printf("\n\n[Tatarigoroshi Epilogue 1]\n\n");
+			else 
+				printf("\n\n[Tatarigoroshi Epilogue 2]\n\n");
+		}
+		else if(strstr(fname, "tips"))
+		{
+			printf("\n\n[Tatarigoroshi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
+		}
+	}
+	else if(strstr(fname, "hima"))
+	{
+		if(!strstr(fname, "tips"))
+		{
+			if(strstr(fname, "001"))
+				title_num = 1;
+			else if( (strstr(fname, "002") && !strstr(fname, "02") && !strstr(fname, "03")) || strstr(fname, "002_00") )
+				title_num = 2;
+			else if(strstr(fname, "002_02"))
+				title_num = 3;
+			else if(strstr(fname, "002_03"))
+				title_num = 4;
+			else if( (strstr(fname, "003") && !strstr(fname, "02") && !strstr(fname, "03") && !strstr(fname, "03a") && !strstr(fname, "04") && !strstr(fname, "05")) || strstr(fname, "003_00") )
+				title_num = 5;
+			else if(strstr(fname, "003_02"))
+				title_num = 6;
+			else if(strstr(fname, "003_03") && !strstr(fname, "03a"))
+				title_num = 7;
+			else if(strstr(fname, "003_03a"))
+			{
+				printf("\n\n[Himatsubushi Ch.7-1]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "003_04"))
+				title_num = 8;
+			else if(strstr(fname, "003_05"))
+				title_num = 9;
+			else if(strstr(fname, "004"))
+				title_num = 10;
+			else if(strstr(fname, "badend"))
+			{
+				printf("\n\n[Himatsubushi Bad-End]\n\n");
+				flag = 0;
+			}
+			
+			if(flag)
+				printf("\n\n[Himatsubushi Ch.%d]\n\n", title_num);
+		}
+		else if(strstr(fname, "tips"))
+		{
+			printf("\n\n[Himatsubushi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
+		}
+	}
 }
 
 bool ReadFile(char **g_argv)
@@ -306,7 +463,7 @@ void CharacterValidation(char *currentLine)
   
   if(hasName)
   {
-    printf("\n[%s]\n", name);
+    printf("\n<%s>\n", name);
   }
   
   strcpy(name, "");
