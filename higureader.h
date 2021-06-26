@@ -2,6 +2,7 @@
 #define HigReaderHeader
 
 FILE *CurrentFile;
+FILE *CurrentSubFile;
 
 char identifier_1[19] = "";
 char identifier_2[30] = "";
@@ -15,6 +16,7 @@ bool ReadFile(char **g_argv);
 
 void CharacterValidation(char *currentLine);
 void LineValidation(char *currentLine);
+void call_script(char *script_name, char *script_section);
 
 #endif
 

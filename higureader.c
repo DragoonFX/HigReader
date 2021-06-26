@@ -478,26 +478,89 @@ void LineValidation(char *currentLine)
 
     int i, len;
 		char subLine[500];
+		char *currentLine_2 = currentLine;
 		char *open = "NULL, \"";//string starting with |NULL, "|
 		char *end = "\",";//string ending with |",|
 		
-		currentLine = extract_text(currentLine, open, end);//finds out a string that starts with |NULL, "| and ends with |",|
-		len = strlen(currentLine);
+		currentLine_2 = extract_text(currentLine_2, open, end);//finds out a string that starts with |NULL, "| and ends with |",|
+		len = strlen(currentLine_2);
 	
     for (i=0;i<len;i++)
     { 
-	  	if (currentLine[0] == '\\' && currentLine[1] == 'n')
+	  	if (currentLine_2[0] == '\\' && currentLine_2[1] == 'n')
       {
 				break;
 	  	}
       //Filter out special characters
-	  	if (currentLine[i] != '\n' && currentLine[i] != '\\')
+	  	if (currentLine_2[i] != '\n' && currentLine_2[i] != '\\')
 	  	{
-				strncat(subLine, &currentLine[i], 1);
+				strncat(subLine, &currentLine_2[i], 1);
 	  	}
     }
 	
     printf("%s\n", subLine);
     strcpy(subLine, "");
   }
+  
+  if( strstr(currentLine, "ModCallScriptSection") && strstr(currentLine, "0x") )
+  {
+		char *main_script_name, *main_script_section;
+		
+		main_script_name = extract_text(currentLine, "(\"", "\",");
+		main_script_section = extract_text(currentLine, ",\"", "\")");
+		
+		//printf("%s %s\n", main_script_name, main_script_section); //for debugging
+		
+		call_script(main_script_name, main_script_section);
+	}
+}
+
+void call_script(char *script_name, char *script_section)
+{
+	char *script_dir = "script/";
+	char *tmp = strdup(script_name);
+	bool ending_flag = false;
+	bool script_section_found = false;
+	
+	strcpy(script_name, script_dir);
+	strcat(script_name, tmp);
+	strcat(script_name, ".txt");
+	free(tmp);
+	
+	//printf("%s\n", script_name); //for debugging
+	
+	if ((CurrentSubFile=fopen(script_name,"r")) == NULL)
+  {
+    exit(1);
+  }
+  
+  char *script_currentLine = NULL;
+  size_t len = 0;
+  size_t script_len = 0;
+  ssize_t read;
+  
+  
+  while(!ending_flag)
+  {
+		while( (read = getline(&script_currentLine, &len, CurrentSubFile)) != EOF )
+		{
+			if(strstr(script_currentLine, script_section))
+				script_section_found = true;
+			
+			if(script_section_found)
+			{
+				script_len = strlen(script_currentLine);
+				
+				CharacterValidation(script_currentLine);
+				LineValidation(script_currentLine);
+				
+				if( (script_len == 2) && strstr(script_currentLine, "}") )
+				{
+					ending_flag = true;
+					break;
+				}
+			}
+		}
+	}
+	free(script_currentLine);
 }
