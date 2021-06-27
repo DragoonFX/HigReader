@@ -49,8 +49,6 @@ void *reverse_str(char *str)
         *p2 ^= *p1;
         *p1 ^= *p2;
     }
-    //free(str);
-    //return 0;
 }
 
 char *extract_text(const char *const string, const char *const start, const char *const end)
@@ -82,7 +80,7 @@ char *extract_text(const char *const string, const char *const start, const char
     memcpy(result, head, length);
 	
 		//printf("%s\n", result); //prints unformatted string(for debugging)
-
+	
     return result;
 }
 
@@ -91,8 +89,6 @@ char *extract_text(const char *const string, const char *const start, const char
 void print_title(char *fname)
 {
 	int title_num, flag;
-	
-	title_num = 0;
 	
 	flag = 1;
 
@@ -266,13 +262,13 @@ void print_title(char *fname)
 		{
 			if(strstr(fname, "001"))
 				title_num = 1;
-			else if( (strstr(fname, "002") && !strstr(fname, "_02") && !strstr(fname, "03")) || strstr(fname, "002_00") )
+			else if( (strstr(fname, "002") && !strstr(fname, "02") && !strstr(fname, "03")) || strstr(fname, "002_00") )
 				title_num = 2;
 			else if(strstr(fname, "002_02"))
 				title_num = 3;
 			else if(strstr(fname, "002_03"))
 				title_num = 4;
-			else if( (strstr(fname, "003") && !strstr(fname, "02") && !strstr(fname, "_03") && !strstr(fname, "03a") && !strstr(fname, "04") && !strstr(fname, "05")) || strstr(fname, "003_00") )
+			else if( (strstr(fname, "003") && !strstr(fname, "02") && !strstr(fname, "03") && !strstr(fname, "03a") && !strstr(fname, "04") && !strstr(fname, "05")) || strstr(fname, "003_00") )
 				title_num = 5;
 			else if(strstr(fname, "003_02"))
 				title_num = 6;
@@ -508,11 +504,10 @@ void LineValidation(char *currentLine)
   
   if( strstr(currentLine, "ModCallScriptSection") && strstr(currentLine, "0x") )
   {
-		char main_script_name[50] = "";
-		char main_script_section[50] = "";
+		char *main_script_name, *main_script_section;
 		
-		strcpy(main_script_name, extract_text(currentLine, "(\"", "\","));
-		strcpy(main_script_section, extract_text(currentLine, ",\"", "\")"));
+		main_script_name = extract_text(currentLine, "(\"", "\",");
+		main_script_section = extract_text(currentLine, ",\"", "\")");
 		
 		//printf("%s %s\n", main_script_name, main_script_section); //for debugging
 		
@@ -520,21 +515,21 @@ void LineValidation(char *currentLine)
 	}
 }
 
-void call_script(char script_name[50], char script_section[50])
+void call_script(char *script_name, char *script_section)
 {
 	char *script_dir = "script/";
-	char *temp = strdup(script_name);
+	char *tmp = strdup(script_name);
 	bool ending_flag = false;
 	bool script_section_found = false;
 	
 	strcpy(script_name, script_dir);
-	strcat(script_name, temp);
+	strcat(script_name, tmp);
 	strcat(script_name, ".txt");
-	free(temp);
+	free(tmp);
 	
-	//printf("%s\n", script_section); //for debugging
+	//printf("%s\n", script_name); //for debugging
 	
-	if((CurrentSubFile=fopen(script_name,"r")) == NULL)
+	if ((CurrentSubFile=fopen(script_name,"r")) == NULL)
   {
     exit(1);
   }
@@ -559,7 +554,7 @@ void call_script(char script_name[50], char script_section[50])
 				CharacterValidation(script_currentLine);
 				LineValidation(script_currentLine);
 				
-				if( (script_len <= 2) && strstr(script_currentLine, "}") )
+				if( (script_len == 2) && strstr(script_currentLine, "}") )
 				{
 					ending_flag = true;
 					break;
