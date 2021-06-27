@@ -15,11 +15,11 @@ This is a fork of [HigReader](https://github.com/aamador-ch-en/HigReader) create
 * Removed the option to convert japanese text
 
 ## Instructions
-1. You can compile the program and feed it a higurashi script file or you can use the `start_conversion.sh` to batch convert the scripts of a whole arc.
-1. If using the `start_conversion.sh`-
+1. You can compile the program and feed it a higurashi script file or you can use the `start_conversion.sh`(outputs a txt file) or `html_start_conversion`(outputs a formatted html file) to batch convert the scripts of a whole arc.
+1. If using the `html_start_conversion.sh`-
 	1. First make sure you are using a linux based distro (if using windows, download and install cygwin with gcc and it should work on android(with termux) and any unix based OS)
 	1. Clone this repo to your local machine and `cd` to it
 	1. Make a directory named `script`
 	1. Copy the scripts from <Higurashi_Arc_Name>/StreamingAssets/Scripts/ directory to the `script/` directory(the scripts should be in txt format)
-	1. Then run `./start_conversion.sh`
-	1. It will produce a txt file named `Higurashi_<insert_arc_name>.txt`. Now you can convert it to pdf or epub using calibre.
+	1. Then run `./html_start_conversion.sh`
+	1. It will produce a txt file named `Higurashi_<insert_arc_name>.html`. Now you can convert it to pdf or epub using calibre.

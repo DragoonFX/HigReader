@@ -1,10 +1,10 @@
 #!/bin/bash
 
-output_name_initial="Higurashi_<insert_arc_name>_initial.txt"
-output_name_final="Higurashi_<insert_arc_name>.txt"
+output_name_initial="Higurashi_<insert_arc_name>_initial.html"
+output_name_final="Higurashi_<insert_arc_name>.html"
 script_dir="script"
-exe_name="higureader.out"
-source_name="higureader.c"
+exe_name="html_higureader.out"
+source_name="html_higureader.c"
 
 if [ -f "$output_name_final" ]
 then

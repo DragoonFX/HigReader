@@ -4,7 +4,7 @@
 #include <string.h>
 #include "higureader.h"
 
-int main(int argc, char *argv[])
+void main(int argc, char *argv[])
 {
 	if(argc == 2)
 	{	
@@ -19,11 +19,11 @@ int main(int argc, char *argv[])
 		{
 			printf("Invalid file\n");
 			free(CurrentFile);
-			return 0;
+			return;
 		}
 		printf("\n");
 		
-		free(CurrentFile);
+		//free(CurrentFile);
 	}
 	else if(argc < 1)
 		printf("Error! No arguments!\n"
@@ -39,8 +39,8 @@ char *extract_text(const char *const string, const char *const start, const char
 {
     char  *head;
     char  *tail;
-    size_t length;
     char  *result;
+    size_t length;
 
     if ((string == NULL) || (start == NULL) || (end == NULL))
         return NULL;
@@ -79,7 +79,7 @@ void print_title(char *fname)
 	if(strstr(fname, "onik"))
 	{
 		if(strstr(fname, "_op.txt"))
-			printf("\n\n[Onikakushi Prologue]\n\n");
+			printf("<h2 class = \"chapter\">Onikakushi Prologue</h2>");
 		else if(!strstr(fname, "tips"))
 		{
 			if(strstr(fname, "000"))
@@ -117,11 +117,11 @@ void print_title(char *fname)
 			else if(strstr(fname, "015_03"))
 				title_num = 16;
 			
-			printf("\n\n[Onikakushi Ch.%d]\n\n", title_num);
+			printf("<h2 class = \"chapter\">Onikakushi Ch - %d</h2>", title_num);
 		}
 		else if(strstr(fname, "tips"))
 		{
-			printf("\n\n[Onikakushi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
+			printf("<h2 class = \"chapter\">Onikakushi tip - %s</h2>", extract_text(fname, "tips_", ".txt"));
 		}
 	}
 	else if(strstr(fname, "wata"))
@@ -167,18 +167,18 @@ void print_title(char *fname)
 			else if(strstr(fname, "012_03"))
 				title_num = 19;
 			
-			printf("\n\n[Watanagashi Ch.%d]\n\n", title_num);
+			printf("<h2 class = \"chapter\">Watanagashi Ch - %d</h2>", title_num);
 		}
 		else if(strstr(fname, "_ep_"))
 		{
 			if(strstr(fname, "_ep_01"))
-				printf("\n\n[Watanagashi Epilogue 1]\n\n");
+				printf("<h2 class = \"chapter\">Watanagashi Epilogue 1</h2>");
 			else 
-				printf("\n\n[Watanagashi Epilogue 2]\n\n");
+				printf("<h2 class = \"chapter\">Watanagashi Epilogue 2</h2>");
 		}
 		else if(strstr(fname, "tips"))
 		{
-			printf("\n\n[Watanagashi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
+			printf("<h2 class = \"chapter\">Watanagashi tip - %s</h2>", extract_text(fname, "tips_", ".txt"));
 		}
 	}
 	else if(strstr(fname, "tata"))
@@ -226,18 +226,18 @@ void print_title(char *fname)
 			else if(strstr(fname, "014"))
 				title_num = 20;
 			
-			printf("\n\n[Tatarigoroshi Ch.%d]\n\n", title_num);
+			printf("<h2 class = \"chapter\">Tatarigoroshi Ch - %d</h2>", title_num);
 		}
 		else if(strstr(fname, "_ep"))
 		{
 			if(strstr(fname, "_ep01"))
-				printf("\n\n[Tatarigoroshi Epilogue 1]\n\n");
+				printf("<h2 class = \"chapter\">Tatarigoroshi Epilogue 1</h2>");
 			else 
-				printf("\n\n[Tatarigoroshi Epilogue 2]\n\n");
+				printf("<h2 class = \"chapter\">Tatarigoroshi Epilogue 2</h2>");
 		}
 		else if(strstr(fname, "tips"))
 		{
-			printf("\n\n[Tatarigoroshi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
+			printf("<h2 class = \"chapter\">Tatarigoroshi tip - %s</h2>", extract_text(fname, "tips_", ".txt"));
 		}
 	}
 	else if(strstr(fname, "hima"))
@@ -260,7 +260,7 @@ void print_title(char *fname)
 				title_num = 7;
 			else if(strstr(fname, "003_03a"))
 			{
-				printf("\n\n[Himatsubushi Ch.7-1]\n\n");
+				printf("<h2 class = \"chapter\">Himatsubushi Ch - 7-1</h2>");
 				flag = 0;
 			}
 			else if(strstr(fname, "003_04"))
@@ -271,16 +271,16 @@ void print_title(char *fname)
 				title_num = 10;
 			else if(strstr(fname, "badend"))
 			{
-				printf("\n\n[Himatsubushi Bad-End]\n\n");
+				printf("<h2 class = \"chapter\">Himatsubushi Bad-End</h2>");
 				flag = 0;
 			}
 			
 			if(flag)
-				printf("\n\n[Himatsubushi Ch.%d]\n\n", title_num);
+				printf("<h2 class = \"chapter\">Himatsubushi Ch - %d</h2>", title_num);
 		}
 		else if(strstr(fname, "tips"))
 		{
-			printf("\n\n[Himatsubushi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
+			printf("<h2 class = \"chapter\">Himatsubushi tip - %s</h2>", extract_text(fname, "tips_", ".txt"));
 		}
 	}
 }
@@ -288,7 +288,7 @@ void print_title(char *fname)
 bool ReadFile(char *file_name)
 {
   //Can we retrieve file?
-  if ((CurrentFile=fopen(file_name,"r")) == NULL)
+  if( (CurrentFile=fopen(file_name,"r")) == NULL )
   {
     exit(1);
   }
@@ -298,7 +298,7 @@ bool ReadFile(char *file_name)
   size_t length = 0;
   ssize_t read;
 
-  while ((read=getline(&currentLine, &length, CurrentFile)) != EOF)
+  while( (read = getline(&currentLine, &length, CurrentFile)) != EOF )
   {
     CharacterValidation(currentLine);
     LineValidation(currentLine);
@@ -456,7 +456,7 @@ void CharacterValidation(char *currentLine)
   
   if(hasName)
   {
-    printf("\n[%s]\n", name);
+    printf("\n<p class=\"name\"><b><i>%s-</i></b></p>\n", name);
     //printf("\n[%s]\n", name); //for ddebugging
   }
   
@@ -473,10 +473,8 @@ void LineValidation(char *currentLine)
     int i, len;
 		char subLine[500];
 		char *currentLine_2 = currentLine;
-		char *open = "NULL, \"";//string starting with |NULL, "|
-		char *end = "\",";//string ending with |",|
 		
-		currentLine_2 = extract_text(currentLine_2, open, end);//finds out a string that starts with |NULL, "| and ends with |",|
+		currentLine_2 = extract_text(currentLine_2, "NULL, \"", "\",");//finds out a string that starts with |NULL, "| and ends with |",|
 		len = strlen(currentLine_2);
 	
     for (i=0;i<len;i++)
@@ -492,11 +490,11 @@ void LineValidation(char *currentLine)
 	  	}
     }
 	
-    printf("%s\n", subLine);
+    printf("<p>%s</p>\n", subLine);
     strcpy(subLine, "");
   }
   
-  if( strstr(currentLine, "ModCallScriptSection") && strstr(currentLine, "0x") )
+  if( strstr(currentLine, "ModCallScriptSection") && strstr(currentLine, "vm00") )
   {
 		char *main_script_name, *main_script_section;
 		
@@ -521,7 +519,7 @@ void call_script(char *script_name, char *script_section)
 	strcat(script_name, ".txt");
 	free(tmp);
 	
-	//printf("%s\n", script_name); //for debugging
+	printf("%s\n", script_section); //for debugging
 	
 	if ((CurrentSubFile=fopen(script_name,"r")) == NULL)
   {
@@ -536,13 +534,18 @@ void call_script(char *script_name, char *script_section)
   
   while(!ending_flag)
   {
+		//printf("%s\n", script_section); //for debugging
 		while( (read = getline(&script_currentLine, &len, CurrentSubFile)) != EOF )
 		{
+			//printf("%s\n", script_currentLine); //for debugging
+			
 			if(strstr(script_currentLine, script_section))
 				script_section_found = true;
 			
 			if(script_section_found)
 			{
+				printf("%d\n", script_section_found); //for debugging
+				
 				script_len = strlen(script_currentLine);
 				
 				CharacterValidation(script_currentLine);
@@ -555,6 +558,7 @@ void call_script(char *script_name, char *script_section)
 				}
 			}
 		}
+		printf("%d\n", ending_flag); //for debugging
 	}
 	free(script_currentLine);
 }
