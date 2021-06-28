@@ -519,7 +519,7 @@ void call_script(char *script_name, char *script_section)
 	strcat(script_name, ".txt");
 	free(tmp);
 	
-	printf("%s\n", script_section); //for debugging
+	//printf("%s\n", script_section); //for debugging
 	
 	if ((CurrentSubFile=fopen(script_name,"r")) == NULL)
   {
@@ -544,7 +544,7 @@ void call_script(char *script_name, char *script_section)
 			
 			if(script_section_found)
 			{
-				printf("%d\n", script_section_found); //for debugging
+				//printf("%d\n", script_section_found); //for debugging
 				
 				script_len = strlen(script_currentLine);
 				
@@ -558,7 +558,6 @@ void call_script(char *script_name, char *script_section)
 				}
 			}
 		}
-		printf("%d\n", ending_flag); //for debugging
+		//printf("%d\n", ending_flag); //for debugging
 	}
-	free(script_currentLine);
 }
