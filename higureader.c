@@ -479,14 +479,14 @@ void LineValidation(char *currentLine)
 		currentLine_2 = extract_text(currentLine_2, open, end);//finds out a string that starts with |NULL, "| and ends with |",|
 		len = strlen(currentLine_2);
 	
-    for (i=0;i<len;i++)
+    for(i=0;i<len;i++)
     { 
-	  	if (currentLine_2[0] == '\\' && currentLine_2[1] == 'n')
+	  	if(currentLine_2[0] == '\\' && currentLine_2[1] == 'n')
       {
 				break;
 	  	}
       //Filter out special characters
-	  	if (currentLine_2[i] != '\n' && currentLine_2[i] != '\\')
+	  	if(currentLine_2[i] != '\n' && currentLine_2[i] != '\\')
 	  	{
 				strncat(subLine, &currentLine_2[i], 1);
 	  	}
@@ -509,21 +509,18 @@ void LineValidation(char *currentLine)
 	}
 }
 
-void call_script(char *script_name, char *script_section)
+void call_script(char script_name[50], char script_section[50])
 {
-	char *script_dir = "script/";
-	char *tmp = strdup(script_name);
+	char script_full_dir[50] = "script/";
 	bool ending_flag = false;
 	bool script_section_found = false;
 	
-	strcpy(script_name, script_dir);
-	strcat(script_name, tmp);
-	strcat(script_name, ".txt");
-	free(tmp);
+  strcat(script_full_dir, script_name);
+  strcat(script_full_dir, ".txt");
+  
+	//printf("%s | %s\n", script_full_dir, script_section); //for debugging
 	
-	//printf("%s\n", script_name); //for debugging
-	
-	if ((CurrentSubFile=fopen(script_name,"r")) == NULL)
+	if( (CurrentSubFile=fopen(script_full_dir,"r")) == NULL )
   {
     exit(1);
   }

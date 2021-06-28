@@ -16,7 +16,7 @@ bool ReadFile(char *file_name);
 
 void CharacterValidation(char *currentLine);
 void LineValidation(char *currentLine);
-void call_script(char *script_name, char *script_section);
+void call_script(char script_name[50], char script_section[50]);
 
 #endif
 

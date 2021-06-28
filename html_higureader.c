@@ -4,7 +4,7 @@
 #include <string.h>
 #include "higureader.h"
 
-void main(int argc, char *argv[])
+void main(int argc, char **argv)
 {
 	if(argc == 2)
 	{	
@@ -25,7 +25,7 @@ void main(int argc, char *argv[])
 		
 		//free(CurrentFile);
 	}
-	else if(argc < 1)
+	else if(argc <= 1)
 		printf("Error! No arguments!\n"
 				"Usage: ./<HiguReader executable> filename.txt\n");
 	else
@@ -37,9 +37,9 @@ void main(int argc, char *argv[])
 
 char *extract_text(const char *const string, const char *const start, const char *const end)
 {
-    char  *head;
-    char  *tail;
-    char  *result;
+    char  *head = "";
+    char  *tail = "";
+    char  *result = "";
     size_t length;
 
     if ((string == NULL) || (start == NULL) || (end == NULL))
@@ -457,7 +457,7 @@ void CharacterValidation(char *currentLine)
   if(hasName)
   {
     printf("\n<p class=\"name\"><b><i>%s-</i></b></p>\n", name);
-    //printf("\n[%s]\n", name); //for ddebugging
+    //printf("\n[%s]\n", name); //for debugging
   }
   
   strcpy(name, "");
@@ -477,14 +477,14 @@ void LineValidation(char *currentLine)
 		currentLine_2 = extract_text(currentLine_2, "NULL, \"", "\",");//finds out a string that starts with |NULL, "| and ends with |",|
 		len = strlen(currentLine_2);
 	
-    for (i=0;i<len;i++)
+    for(i=0;i<len;i++)
     { 
-	  	if (currentLine_2[0] == '\\' && currentLine_2[1] == 'n')
+	  	if( currentLine_2[0] == '\\' && currentLine_2[1] == 'n' )
       {
 				break;
 	  	}
       //Filter out special characters
-	  	if (currentLine_2[i] != '\n' && currentLine_2[i] != '\\')
+	  	if( currentLine_2[i] != '\n' && currentLine_2[i] != '\\' )
 	  	{
 				strncat(subLine, &currentLine_2[i], 1);
 	  	}
@@ -507,21 +507,18 @@ void LineValidation(char *currentLine)
 	}
 }
 
-void call_script(char *script_name, char *script_section)
+void call_script(char script_name[50], char script_section[50])
 {
-	char *script_dir = "script/";
-	char *tmp = strdup(script_name);
+	char script_full_dir[50] = "script/";
 	bool ending_flag = false;
 	bool script_section_found = false;
 	
-	strcpy(script_name, script_dir);
-	strcat(script_name, tmp);
-	strcat(script_name, ".txt");
-	free(tmp);
+  strcat(script_full_dir, script_name);
+  strcat(script_full_dir, ".txt");
+  
+	//printf("%s | %s\n", script_full_dir, script_section); //for debugging
 	
-	//printf("%s\n", script_section); //for debugging
-	
-	if ((CurrentSubFile=fopen(script_name,"r")) == NULL)
+	if( (CurrentSubFile=fopen(script_full_dir,"r")) == NULL )
   {
     exit(1);
   }
