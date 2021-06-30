@@ -283,6 +283,142 @@ void print_title(char *fname)
 			printf("<h2 class = \"chapter\">Himatsubushi tip - %s</h2>", extract_text(fname, "tips_", ".txt"));
 		}
 	}
+	else if(strstr(fname, "meak"))
+	{
+		if(!strstr(fname, "tips") && !strstr(fname, "_ep"))
+		{
+			if(strstr(fname, "001"))
+				title_num = 1;
+			else if(strstr(fname, "002"))
+				title_num = 2;
+			else if(strstr(fname, "003"))
+				title_num = 3;
+			else if(strstr(fname, "004"))
+				title_num = 4;
+			else if(strstr(fname, "005"))
+				title_num = 5;
+			else if(strstr(fname, "006"))
+				title_num = 6;
+			else if(strstr(fname, "007"))
+				title_num = 7;
+			else if(strstr(fname, "008"))
+				title_num = 8;
+			else if(strstr(fname, "009"))
+				title_num = 9;
+			else if(strstr(fname, "010"))
+				title_num = 10;
+			else if(strstr(fname, "011"))
+				title_num = 11;
+			else if(strstr(fname, "012"))
+				title_num = 12;
+			else if(strstr(fname, "013"))
+				title_num = 13;
+			else if( strstr(fname, "014_1") && !strstr(fname, "2") )
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 14.1</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "014_2"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 14.2</h2>");
+				flag = 0;
+			}
+			else if( strstr(fname, "015_1") && !strstr(fname, "2") )
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 15.1</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "015_2"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 15.2</h2>");
+				flag = 0;
+			}
+			else if( strstr(fname, "016_1") && !strstr(fname, "2") )
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 16.1</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "016_2"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 16.2</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "017"))
+				title_num = 17;
+			else if(strstr(fname, "018"))
+				title_num = 18;
+			else if( strstr(fname, "019_1") && !strstr(fname, "2") )
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 19.1</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "019_2"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 19.2</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "020"))
+				title_num = 20;
+			else if( strstr(fname, "021_1") && !strstr(fname, "_2") )
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 21.1</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "021_2"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 21.2</h2>");
+				flag = 0;
+			}
+			else if( strstr(fname, "022_1") && !strstr(fname, "_2") )
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 22.1</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "022_2"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 22.2</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "23"))
+				title_num = 23;
+			else if( strstr(fname, "024") && !strstr(fname, "a.txt") && !strstr(fname, "b" ) )
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 24</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "024a"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 24, Wrong Choice</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "024b"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 24, Correct Choice</h2>");
+				flag = 0;
+			}
+			else if(strstr(fname, "badend"))
+			{
+				printf("<h2 class = \"chapter\">Meakashi Ch - 24, Bad-End</h2>");
+				flag = 0;
+			}
+			
+			if(flag)
+				printf("<h2 class = \"chapter\">Meakashi Ch.%d</h2>", title_num);
+		}
+		else if(strstr(fname, "_ep"))
+		{
+			if(strstr(fname, "_ep_01"))
+				printf("<h2 class = \"chapter\">Meakashi Epilogue 1</h2>");
+			else if(strstr(fname, "_ep_02"))
+				printf("<h2 class = \"chapter\">Meakashi Epilogue 2</h2>");
+			else
+				printf("<h2 class = \"chapter\">Meakashi Epilogue 3</h2>");
+		}
+		else if(strstr(fname, "tips"))
+		{
+			printf("<h2 class = \"chapter\">Meakashi tip - %s</h2>", extract_text(fname, "tips_", ".txt"));
+		}
+	}
 }
 
 bool ReadFile(char *file_name)

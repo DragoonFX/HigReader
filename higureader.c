@@ -117,7 +117,7 @@ void print_title(char *fname)
 			else if(strstr(fname, "015_03"))
 				title_num = 16;
 			
-			printf("\n\n[Onikakushi Ch.%d]\n\n", title_num);
+			printf("\n\n[Onikakushi Ch - %d]\n\n", title_num);
 		}
 		else if(strstr(fname, "tips"))
 		{
@@ -167,7 +167,7 @@ void print_title(char *fname)
 			else if(strstr(fname, "012_03"))
 				title_num = 19;
 			
-			printf("\n\n[Watanagashi Ch.%d]\n\n", title_num);
+			printf("\n\n[Watanagashi Ch - %d]\n\n", title_num);
 		}
 		else if(strstr(fname, "_ep_"))
 		{
@@ -226,7 +226,7 @@ void print_title(char *fname)
 			else if(strstr(fname, "014"))
 				title_num = 20;
 			
-			printf("\n\n[Tatarigoroshi Ch.%d]\n\n", title_num);
+			printf("\n\n[Tatarigoroshi Ch - %d]\n\n", title_num);
 		}
 		else if(strstr(fname, "_ep"))
 		{
@@ -260,7 +260,7 @@ void print_title(char *fname)
 				title_num = 7;
 			else if(strstr(fname, "003_03a"))
 			{
-				printf("\n\n[Himatsubushi Ch.7-1]\n\n");
+				printf("\n\n[Himatsubushi Ch - 7.1]\n\n");
 				flag = 0;
 			}
 			else if(strstr(fname, "003_04"))
@@ -271,16 +271,152 @@ void print_title(char *fname)
 				title_num = 10;
 			else if(strstr(fname, "badend"))
 			{
-				printf("\n\n[Himatsubushi Bad-End]\n\n");
+				printf("\n\n[Himatsubushi - Bad-End]\n\n");
 				flag = 0;
 			}
 			
 			if(flag)
-				printf("\n\n[Himatsubushi Ch.%d]\n\n", title_num);
+				printf("\n\n[Himatsubushi Ch - %d]\n\n", title_num);
 		}
 		else if(strstr(fname, "tips"))
 		{
 			printf("\n\n[Himatsubushi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
+		}
+	}
+	else if(strstr(fname, "meak"))
+	{
+		if(!strstr(fname, "tips") && !strstr(fname, "_ep"))
+		{
+			if(strstr(fname, "001"))
+				title_num = 1;
+			else if(strstr(fname, "002"))
+				title_num = 2;
+			else if(strstr(fname, "003"))
+				title_num = 3;
+			else if(strstr(fname, "004"))
+				title_num = 4;
+			else if(strstr(fname, "005"))
+				title_num = 5;
+			else if(strstr(fname, "006"))
+				title_num = 6;
+			else if(strstr(fname, "007"))
+				title_num = 7;
+			else if(strstr(fname, "008"))
+				title_num = 8;
+			else if(strstr(fname, "009"))
+				title_num = 9;
+			else if(strstr(fname, "010"))
+				title_num = 10;
+			else if(strstr(fname, "011"))
+				title_num = 11;
+			else if(strstr(fname, "012"))
+				title_num = 12;
+			else if(strstr(fname, "013"))
+				title_num = 13;
+			else if( strstr(fname, "014_1") && !strstr(fname, "2") )
+			{
+				printf("\n\n[Meakashi Ch - 14.1]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "014_2"))
+			{
+				printf("\n\n[Meakashi Ch - 14.2]\n\n");
+				flag = 0;
+			}
+			else if( strstr(fname, "015_1") && !strstr(fname, "2") )
+			{
+				printf("\n\n[Meakashi Ch - 15.1]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "015_2"))
+			{
+				printf("\n\n[Meakashi Ch - 15.2]\n\n");
+				flag = 0;
+			}
+			else if( strstr(fname, "016_1") && !strstr(fname, "2") )
+			{
+				printf("\n\n[Meakashi Ch - 16.1]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "016_2"))
+			{
+				printf("\n\n[Meakashi Ch - 16.2]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "017"))
+				title_num = 17;
+			else if(strstr(fname, "018"))
+				title_num = 18;
+			else if( strstr(fname, "019_1") && !strstr(fname, "2") )
+			{
+				printf("\n\n[Meakashi Ch - 19.1]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "019_2"))
+			{
+				printf("\n\n[Meakashi Ch - 19.2]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "020"))
+				title_num = 20;
+			else if( strstr(fname, "021_1") && !strstr(fname, "_2") )
+			{
+				printf("\n\n[Meakashi Ch - 21.1]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "021_2"))
+			{
+				printf("\n\n[Meakashi Ch - 21.2]\n\n");
+				flag = 0;
+			}
+			else if( strstr(fname, "022_1") && !strstr(fname, "_2") )
+			{
+				printf("\n\n[Meakashi Ch - 22.1]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "022_2"))
+			{
+				printf("\n\n[Meakashi Ch - 22.2]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "23"))
+				title_num = 23;
+			else if( strstr(fname, "024") && !strstr(fname, "a.txt") && !strstr(fname, "b" ) )
+			{
+				printf("\n\n[Meakashi Ch - 24]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "024a"))
+			{
+				printf("\n\n[Meakashi Ch - 24, Wrong Choice]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "024b"))
+			{
+				printf("\n\n[Meakashi Ch - 24, Correct Choice]\n\n");
+				flag = 0;
+			}
+			else if(strstr(fname, "badend"))
+			{
+				printf("\n\n[Meakashi Ch - 24, Bad-End]\n\n");
+				flag = 0;
+			}
+			
+			if(flag)
+				printf("\n\n[Meakashi Ch.%d]\n\n", title_num);
+		}
+		else if(strstr(fname, "_ep"))
+		{
+			if(strstr(fname, "_ep_01"))
+				printf("\n\n[Meakashi Epilogue 1]\n\n");
+			else if(strstr(fname, "_ep_02"))
+				printf("\n\n[Meakashi Epilogue 2]\n\n");
+			else
+				printf("\n\n[Meakashi Epilogue 3]\n\n");
+		}
+		else if(strstr(fname, "tips"))
+		{
+			printf("\n\n[Meakashi tip - %s]\n", extract_text(fname, "tips_", ".txt"));
 		}
 	}
 }
